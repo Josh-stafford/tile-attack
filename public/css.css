@@ -1,0 +1,156 @@
+body {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+.leftSide {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+
+	width: 50%;
+	height: 100%;
+	float: left;
+	position: absolute;
+}
+
+.rightSide {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+
+	width: 50%;
+	height: 100%;
+	float: right;
+	position: absolute;
+	right: 0;
+}
+
+#Controls {
+	width: 95%;
+	height: 95%;
+	margin: 0 auto;
+	margin-top: 2.5%;
+	background-color: #998cff;
+	border-radius: 15px;
+
+}
+
+#Inventory {
+	width: 95%;
+	height: 46.5%;
+	margin: 0 auto;
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	border-radius: 15px;
+	background-color: #7968ff;
+	font-family: Verdana;
+	text-align: center;
+	color: white;
+
+}
+
+#Info {
+	width: 95%;
+	height: 46.5%;
+	margin: 0 auto;
+	margin-top: 2.5%;
+	border-radius: 15px;
+	background-color: #4b3ad1;
+	text-align: center;
+}
+
+#atk_buttons {
+	width: 75%;
+	height: 30%;
+	margin: 0 auto;
+	padding-top: 10%;
+	text-align: center;
+}
+
+.attack {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 20%;
+	height: 40%;
+	background-color: #6357ba;
+	border: 0;
+	color: white;
+}
+
+.attack:hover{
+	color: black;
+}
+
+.attack:active {
+	background-color: #413787;
+}
+
+.title {
+	font-family: Verdana;
+	font-size: 100%;
+	position: fixed;
+	left: 22%;
+	text-align: center;
+}
+
+#healthBar1{
+	width: 80%;
+	height: 10%;
+	text-align: center;
+	margin: 0 auto;
+	background-color: gray;
+
+}
+
+#bar1Fill{
+	-webkit-transition-duration: 1s; /* Safari */
+	height: 100%;
+	background-color: green;
+}
+
+#bar2Fill{
+	-webkit-transition-duration: 1s; /* Safari */
+	height: 100%;
+	background-color: red;
+}
+
+#you {
+	width:100%;
+	height:50%;
+	/*background-color:white;*/
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+#enemy {
+	width:100%;
+	height:50%;
+	/*background-color:black;*/
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	background-color: #4b3aa5;
+
+}
+
+.confused {
+	margin-left: 35%;
+	margin-right: 35%;
+	margin-top: 5%;
+	font-family: Verdana;
+	color: #8b8d8e;
+	border: 2px solid gray;
+}
+
+#confPlayer {
+	background-color: #4b3ad1;	
+}
+
+
+#confEnemy {
+	background-color: #4b3aa5;
+
+}
+
+#textbox {
+	margin: 0 auto;
+}

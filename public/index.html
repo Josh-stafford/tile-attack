@@ -1,0 +1,75 @@
+<html>
+	
+	<head>
+
+		<link rel="stylesheet" type="text/css" href="css.css">
+		
+		<title>Battle Simulator</title>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+		<script src='player.js'></script>
+		<script src='client.js'></script>
+	</head>
+
+	<body>
+		
+		<div class='leftSide'>
+
+			<div id='Controls'>
+
+				<p class='title'>CONTROLS</p>
+
+				<div id='atk_buttons'>
+					<button id='atk1' class='attack' onclick='attacker(0)'></button>
+					<button id='atk2' class='attack' onclick='attacker(1)'></button>
+					<button id='atk3' class='attack' onclick='attacker(2)'></button>
+					<button id='atk4' class='attack' onclick='attacker(3)'></button>
+				</div>
+				
+			</div>
+
+		</div>
+		<div class='rightSide'>
+
+			<div id='Inventory'>
+
+				<div id='textbox'>
+
+					<p id='messageBox'></p>
+				
+				</div>
+
+			</div>
+
+			<div id='Info'>
+
+				<div id='you'>
+
+					<div id='healthBar1'>
+						<div id='bar1Fill' style='width: 100%'>
+						</div>
+					</div>
+
+					<div id='confPlayer' class='confused'>
+						<p>Confused</p>
+					</div>
+					
+				</div>
+
+				<div id='enemy'>
+					<div id='healthBar1'>
+						<div id='bar2Fill' style='width: 100%'>
+						</div>
+					</div>
+					<div id='confEnemy' class='confused'>
+						<p>Confused</p>
+					</div>
+				</div>
+				
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
