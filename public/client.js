@@ -7,6 +7,7 @@ socket.on('turn', turn = true);
 socket.on('attacked', attacked);
 socket.on('enemyHealthUpdate', healthUpd);
 socket.on('enemyDead', deadEnemy);
+socket.on('attackMissed', missedAtk);
 
 var atk1;
 var atk2;
@@ -73,24 +74,36 @@ function slow(attack){
 	}
 }
 
+function r(){
+	return Math.floor(Math.random());
+}
+
 function attacker(atk){
 
 	playerAttack = player.attacks[atk];
 
-	if(slow(attack)){
+	if(player.slowed){
 
-		chance = Math.floor(Math.random());
+		chance = r();
 
 		if(chance > 0.5){
 
-			socket.emit('missed', playerAttack)
+			socket.emit('missed', playerAttack);
+
+			player.countdown -= 1;
 
 		}	
-		
+
 	} else {
 
 		socket.emit('attack', playerAttack);
 
+		player.countdown -= 1;
+
+	}
+
+	if(player.countdown <= 0){
+		player.slowed = false;
 	}
 
 }
@@ -112,4 +125,6 @@ function deadEnemy(){
 	enemyHealth.style.width='0%';
 }
 
-
+function missedAtk(attack){
+	updateMsg('The enemy tried to attack you with ' + attack + ' but missed.');
+}
