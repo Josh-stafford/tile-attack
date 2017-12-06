@@ -7,8 +7,13 @@
 		<title>Battle Simulator</title>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
 		<script src='player.js'></script>
+		<script src='attacked.js'></script>
+		<script src='attacker.js'></script>
 		<script src='client.js'></script>
+		<script src='info.js'></script>
+
 	</head>
 
 	<body>
@@ -20,23 +25,29 @@
 				<p class='title'>CONTROLS</p>
 
 				<div id='atk_buttons'>
-					<button id='atk1' class='attack' onclick='attacker(0)'></button>
-					<button id='atk2' class='attack' onclick='attacker(1)'></button>
-					<button id='atk3' class='attack' onclick='attacker(2)'></button>
-					<button id='atk4' class='attack' onclick='attacker(3)'></button>
+					<button id='atk1' class='attack' onclick='attacker(0)' onmouseover = 'this.innerHTML=buttonInfo(0)' onmouseout = 'this.innerHTML=player.attacks[0][0]'></button>
+					<button id='atk2' class='attack' onclick='attacker(1)' onmouseover = 'this.innerHTML=buttonInfo(1)' onmouseout = 'this.innerHTML=player.attacks[1][0]'></button>
+					<button id='atk3' class='attack' onclick='attacker(2)' onmouseover = 'this.innerHTML=buttonInfo(2)' onmouseout = 'this.innerHTML=player.attacks[2][0]'></button>
+					<button id='atk4' class='attack' onclick='attacker(3)' onmouseover = 'this.innerHTML=buttonInfo(3)' onmouseout = 'this.innerHTML=player.attacks[3][0]'></button>
 				</div>
+
+				<div id='Buffs' class='title'>Buffs</div>
 				
 			</div>
+
 
 		</div>
 		<div class='rightSide'>
 
 			<div id='Inventory'>
 
-				<div id='textbox'>
+				<div id='box'>
 
-					<p id='messageBox'></p>
+					<div id='textbox'>
+
+						<p id='messageBox'></p>
 				
+					</div>
 				</div>
 
 			</div>
@@ -50,8 +61,8 @@
 						</div>
 					</div>
 
-					<div id='confPlayer' class='confused'>
-						<p>Confused</p>
+					<div id='slowPlayer' class='slow'>
+						<p>Slowed</p>
 					</div>
 					
 				</div>
@@ -61,8 +72,8 @@
 						<div id='bar2Fill' style='width: 100%'>
 						</div>
 					</div>
-					<div id='confEnemy' class='confused'>
-						<p>Confused</p>
+					<div id='slowEnemy' class='slow'>
+						<p>Slowed</p>
 					</div>
 				</div>
 				

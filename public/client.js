@@ -1,13 +1,22 @@
 var socket;
 var playing = false;
 var turn = false;
-socket = io.connect('http://172.20.12.112:3000');
+socket = io.connect('http://172.20.12.75:4040');
 socket.on('playing', setup);
-socket.on('turn', turn = true);
 socket.on('attacked', attacked);
-socket.on('enemyHealthUpdate', healthUpd);
+socket.on('attackMissed', missed);
+socket.on('enemyHealthUpdate', enemyHealthUpd);
 socket.on('enemyDead', deadEnemy);
-socket.on('attackMissed', missedAtk);
+socket.on('turn', yourTurn)
+socket.on('notSlowed', function(){
+	enemySlowBox.style.backgroundColor = '#4b3aa5';
+	enemySlowBox.style.color = 'gray';
+})
+
+socket.on('enemySlowed', function(){
+	enemySlowBox.style.backgroundColor = 'red';
+	enemySlowBox.style.color = 'white';
+})
 
 var atk1;
 var atk2;
@@ -18,6 +27,8 @@ var enemyHealth;
 var player;
 var ready;
 var messageBox;
+var slowBox;
+var enemySlowBox;
 
 attacks = [
 	// Name,Damage,Slow,Confuse,Fast
@@ -31,8 +42,8 @@ attacks = [
 	['Big enough', 41, true, false, false]
 ];
 
-myAttacks = []
-atkButtons = []
+var myAttacks = []
+var atkButtons = []
 
 function setup(){
 	for(var i = 0; i < 4; i++){
@@ -41,7 +52,9 @@ function setup(){
 
 	playerHealth = document.getElementById('bar1Fill');
 	enemyHealth = document.getElementById('bar2Fill');
-	messageBox = document.getElementById('messageBox');
+	messageBox = document.getElementById('textbox');
+	slowBox = document.getElementById('slowPlayer');
+	enemySlowBox = document.getElementById('slowEnemy');
 
 	for(var i = 0; i < 4; i++){
 		attack = attacks[Math.floor(Math.random()*attacks.length)];
@@ -59,11 +72,20 @@ function setup(){
 }
 
 function updateMsg(message){
-	messageBox.innerHTML=message;
+	messageBox.innerHTML= '<p>' + message + '</p>' + '<hr/>' + messageBox.innerHTML
+}
+
+function missed(attack){
+	console.log('Enemy missed.');
+	updateMsg('Your enemy missed you with ' + attack[0] + '.');
+}
+
+function enemyHealthUpd(health){
+	enemyHealth.style.width = health.toString() + '%';
 }
 
 function healthUpd(health){
-	enemyHealth.style.width = health.toString() + '%';
+	playerHealth.style.width = health.toString() + '%';	
 }
 
 function slow(attack){
@@ -75,56 +97,17 @@ function slow(attack){
 }
 
 function r(){
-	return Math.floor(Math.random());
-}
-
-function attacker(atk){
-
-	playerAttack = player.attacks[atk];
-
-	if(player.slowed){
-
-		chance = r();
-
-		if(chance > 0.5){
-
-			socket.emit('missed', playerAttack);
-
-			player.countdown -= 1;
-
-		}	
-
-	} else {
-
-		socket.emit('attack', playerAttack);
-
-		player.countdown -= 1;
-
-	}
-
-	if(player.countdown <= 0){
-		player.slowed = false;
-	}
-
-}
-
-function attacked(attack){
-	console.log('Attacked');
-	updateMsg('Your enemy attacks you with ' + attack[0]);
-	player.hp -= attack[1];
-	if(player.hp <= 0){
-		playerHealth.style.width = '0%';
-		socket.emit('dead');
-	} else {
-		playerHealth.style.width = (player.hp).toString() + '%'
-		socket.emit('updateHealth', player.hp);
-	}
+	return Math.random();
 }
 
 function deadEnemy(){
 	enemyHealth.style.width='0%';
+	updateMsg('Your enemy has been successfully defeated!');
 }
 
-function missedAtk(attack){
-	updateMsg('The enemy tried to attack you with ' + attack + ' but missed.');
+function yourTurn(){
+	updateMsg('It\'s your turn.');
+	if(player.slowed){
+		player.countdown -= 1;
+	}
 }

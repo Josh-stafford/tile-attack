@@ -1,6 +1,7 @@
 body {
 	padding: 0 0 0 0;
 	margin: 0 0 0 0;
+	overflow: hidden;
 }
 
 .leftSide {
@@ -77,9 +78,9 @@ body {
 	color: white;
 }
 
-.attack:hover{
+/*.attack:hover{
 	color: black;
-}
+}*/
 
 .attack:active {
 	background-color: #413787;
@@ -91,6 +92,7 @@ body {
 	position: fixed;
 	left: 22%;
 	text-align: center;
+	color: white;
 }
 
 #healthBar1{
@@ -132,7 +134,7 @@ body {
 
 }
 
-.confused {
+.slow {
 	margin-left: 35%;
 	margin-right: 35%;
 	margin-top: 5%;
@@ -141,16 +143,29 @@ body {
 	border: 2px solid gray;
 }
 
-#confPlayer {
+#slowPlayer {
+	-webkit-transition-duration: 1s; /* Safari */
 	background-color: #4b3ad1;	
 }
 
 
-#confEnemy {
+#slowEnemy {
+	-webkit-transition-duration: 1s; /* Safari */
 	background-color: #4b3aa5;
 
 }
 
 #textbox {
 	margin: 0 auto;
+	overflow: auto;
+	word-wrap: break-word;
+	
+}
+
+#box {
+	width: 100%;
+	height: 100%;
+
+	-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
 }
