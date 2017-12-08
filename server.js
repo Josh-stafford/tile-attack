@@ -111,8 +111,18 @@ function newConnection(socket){
 	  	})
 
 	  	socket.on('critboost', function(){
-	  		console.log(socket.name + ' has used a critical boost.');
-	  		socket.broadcast.emit('critboost');
+	  		if(players[pCount%2] == socket){
+	  			console.log(socket.name + ' has used a critical boost.');
+	  			socket.emit('useCrit');
+	  			socket.broadcast.emit('critboost');
+	  			pCount += 1;
+	  			nextTurn(socket);
+	  		}
+
+	  	})
+
+	  	socket.on('healthBoost', function(health){
+	  		console.log(socket.name + ' has used a health boost.');
 	  	})
 
   	}

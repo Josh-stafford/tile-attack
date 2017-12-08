@@ -1,7 +1,7 @@
 var socket;
 var playing = false;
 var turn = false;
-socket = io.connect('http://172.20.12.116:6061');
+socket = io.connect('http://localhost:6061');
 socket.on('playing', setup);
 socket.on('attacked', attacked);
 socket.on('attackMissed', missed);
@@ -9,6 +9,10 @@ socket.on('enemyHealthUpdate', enemyHealthUpd);
 socket.on('enemyDead', deadEnemy);
 socket.on('turn', yourTurn)
 socket.on('start', start);
+socket.on('useCrit', function(){
+	critBoosted = true;
+	updateMsg('Your next move is 4x more likely to be a critical hit!');
+})
 socket.on('enemySelfDamage', selfDamage);
 socket.on('notSlowed', function(){
 	enemySlowBox.style.backgroundColor = '#4b3aa5';
