@@ -4,9 +4,19 @@ function attacker(atk){
 
 	playerAttack = player.attacks[atk];
 
+	if(dmgBoosted){
+		playerAttack[1] *= dmgBoosted;
+		dmgBoosted = false;
+	}
+
 	critChance = r();
 
 	critMaths = 0.1 / (100 /playerAttack[5])
+
+	if(critBoosted){
+		critMaths *= 4;
+		critBoosted = false;
+	}
 
 	console.log(critMaths);
 

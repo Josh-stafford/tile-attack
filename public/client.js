@@ -45,26 +45,22 @@ var ready;
 var messageBox;
 var slowBox;
 var enemySlowBox;
+var critBoosted;
+var dmgBoosted;
 
-attacks = [
-	//	0	  1		2	   3	  4		5
-	// Name,Damage,Slow,Confuse,Fast,Critical
-	['Slash', 30, false, false, true, 45],
-	['Tackle', 28, false, true, true, 20],
-	['Mankelow', 20, false, true, true, 10],
-	['Ankle-kick', 10, true, false, true, 40],
-	['Scissor kick', 40, false, false, false, 5],
-	['Insult', 31, false, false, true, 23],
-	['Dance', 15, true, true, true, 30],
-	['Big enough', 36, true, false, false, 9]
-];
 
 var myAttacks = []
 var atkButtons = []
+var buffButtons = []
+var myBuffs = []
 
 function setup(){
 	for(var i = 0; i < 4; i++){
 		atkButtons[i] = document.getElementById('atk' + (i+1));
+	}
+
+	for(var i = 0; i < 8; i++){
+		buffButtons[i] = document.getElementById('buff' + (i+1));
 	}
 
 	playerHealth = document.getElementById('bar1Fill');
@@ -82,10 +78,20 @@ function setup(){
 
 	}
 
+	for(var i = 0; i < 8; i++){
+		buff = buffs[Math.floor(Math.random()*buffs.length)];
+		myBuffs.push(buff);
+		buffs.splice(buffs.indexOf(buff), 1);
+	}
+
 	player = new Player(myAttacks);
 
 	for(var i = 0; i < atkButtons.length; i++){
 		atkButtons[i].innerHTML = myAttacks[i][0];
+	}
+
+	for(var i = 0; i < buffButtons.length; i++){
+		buffButtons[i].innerHTML = myBuffs[i][0];
 	}
 
 	console.log('Done');

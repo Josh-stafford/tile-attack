@@ -69,6 +69,14 @@ body {
 	text-align: center;
 }
 
+#items {
+	width: 75%;
+	height: 30%;
+	margin: 0 auto;
+	padding-top: 10%;
+	text-align: center;
+}
+
 .attack {
 	-webkit-transition-duration: 0.4s; /* Safari */
 	margin-left: 2%;
@@ -185,4 +193,18 @@ body {
 
 	-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
     from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+}
+
+.buff {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	margin-top: 5%;
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 20%;
+	height: 40%;
+	background-color: 'green';
+	border-color: 'white';
+	border: 0;
+	color: white;
+
 }
