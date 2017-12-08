@@ -110,6 +110,11 @@ function newConnection(socket){
 	  		nextTurn();
 	  	})
 
+	  	socket.on('critboost', function(){
+	  		console.log(socket.name + ' has used a critical boost.');
+	  		socket.broadcast.emit('critboost');
+	  	})
+
   	}
 
 }

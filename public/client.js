@@ -30,6 +30,10 @@ socket.on('enemyNotConfused', function(){
 	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
 })
 
+socket.on('critboost', function(){
+	updateMsg('Your enemy has used a critical boost!');
+})
+
 // socket.on('start', function(){
 // 	updateMsg('Your starting move.')
 // })
@@ -49,10 +53,10 @@ var critBoosted;
 var dmgBoosted;
 
 
-var myAttacks = []
-var atkButtons = []
-var buffButtons = []
-var myBuffs = []
+var myAttacks = [];
+var atkButtons = [];
+var buffButtons = [];
+var myBuffs = [];
 
 function setup(){
 	for(var i = 0; i < 4; i++){
@@ -78,7 +82,7 @@ function setup(){
 
 	}
 
-	for(var i = 0; i < 8; i++){
+	for(var i = 0; i < 5; i++){
 		buff = buffs[Math.floor(Math.random()*buffs.length)];
 		myBuffs.push(buff);
 		buffs.splice(buffs.indexOf(buff), 1);
@@ -90,7 +94,8 @@ function setup(){
 		atkButtons[i].innerHTML = myAttacks[i][0];
 	}
 
-	for(var i = 0; i < buffButtons.length; i++){
+	for(var i = 0; i < myBuffs.length; i++){
+		console.log(myBuffs[i][0]);
 		buffButtons[i].innerHTML = myBuffs[i][0];
 	}
 
