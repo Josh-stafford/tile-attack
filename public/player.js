@@ -2,7 +2,7 @@ class Player{
 
 	constructor(attacks){
 		this.attacks = attacks;
-		this.hp = 100;
+		this.hp = 150;
 		this.confused = false;
 		this.slowed = false;
 		this.speed = 100;

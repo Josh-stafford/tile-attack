@@ -102,11 +102,11 @@ function missed(attack){
 }
 
 function enemyHealthUpd(health){
-	enemyHealth.style.width = health.toString() + '%';
+	enemyHealth.style.width = (health/1.5).toString() + '%';
 }
 
 function healthUpd(health){
-	playerHealth.style.width = health.toString() + '%';	
+	playerHealth.style.width = (health/1.5).toString() + '%';	
 }
 
 function check(attack, num){
