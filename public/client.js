@@ -1,7 +1,7 @@
 var socket;
 var playing = false;
 var turn = false;
-socket = io.connect('http://172.20.12.116:4040');
+socket = io.connect('http://172.20.12.116:6061');
 socket.on('playing', setup);
 socket.on('attacked', attacked);
 socket.on('attackMissed', missed);
@@ -21,13 +21,13 @@ socket.on('enemySlowed', function(){
 })
 
 socket.on('enemyConfused', function(){
-	enemyConfuseBox.style.color = 'gray';
-	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
+	enemyConfuseBox.style.color = 'white';
+	enemyConfuseBox.style.backgroundColor = 'red';
 })
 
 socket.on('enemyNotConfused', function(){
-	enemyConfuseBox.style.color = 'white';
-	enemyConfuseBox.style.backgroundColor = 'red';
+	enemyConfuseBox.style.color = 'gray';
+	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
 })
 
 // socket.on('start', function(){
@@ -47,15 +47,16 @@ var slowBox;
 var enemySlowBox;
 
 attacks = [
-	// Name,Damage,Slow,Confuse,Fast
-	['Slash', 30, false, false, true],
-	['Tackle', 28, false, true, true],
-	['Mankelow', 20, false, true, true],
-	['Ankle-kick', 10, true, false, true],
-	['Scissor kick', 40, false, false, false],
-	['Insult', 31, false, false, true],
-	['Dance', 15, true, true, true],
-	['Big enough', 36, true, false, false]
+	//	0	  1		2	   3	  4		5
+	// Name,Damage,Slow,Confuse,Fast,Critical
+	['Slash', 30, false, false, true, 45],
+	['Tackle', 28, false, true, true, 20],
+	['Mankelow', 20, false, true, true, 10],
+	['Ankle-kick', 10, true, false, true, 40],
+	['Scissor kick', 40, false, false, false, 5],
+	['Insult', 31, false, false, true, 23],
+	['Dance', 15, true, true, true, 30],
+	['Big enough', 36, true, false, false, 9]
 ];
 
 var myAttacks = []

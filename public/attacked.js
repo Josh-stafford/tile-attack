@@ -12,7 +12,7 @@ function attacked(attack){
 		slowBox.style.color = 'white';
 
 		confuseBox.style.backgroundColor = 'green';
-		enemyConfuseBox.style.color = 'white';
+		confuseBox.style.color = 'white';
 
 		updateMsg('You have been both slowed and confused.');
 

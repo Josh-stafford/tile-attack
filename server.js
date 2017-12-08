@@ -5,7 +5,7 @@ var maxPlayers = 2;
 var playing = true;
 
 var app = express();
-var server = app.listen(4040);
+var server = app.listen(6061);
 
 app.use(express.static('public'));
 
@@ -107,6 +107,7 @@ function newConnection(socket){
 	  	socket.on('selfDamage', function(health){
 	  		console.log(socket.name + ' damaged themselves.');
 	  		socket.broadcast.emit('enemySelfDamage', health);
+	  		nextTurn();
 	  	})
 
   	}
