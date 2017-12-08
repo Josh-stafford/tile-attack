@@ -1,7 +1,7 @@
 var express = require('express');
 var pCount = 0;
 var players = [];
-var maxPlayers = 999999;
+var maxPlayers = 2;
 var playing = true;
 
 var app = express();
@@ -32,7 +32,7 @@ function newConnection(socket){
 	// console.log('New connection');
 	// console.log(socket.name);
 
-	if(pCount < maxPlayers){
+	if(players.length < maxPlayers){
 		socket.playing = true;
 		pCount += 1;
 		players.push(socket);
@@ -40,61 +40,92 @@ function newConnection(socket){
 		socket.emit('playing');
 	}
 
-	socket.on('notSlowed', function(){
-		socket.broadcast.emit('notSlowed');
-	})
+	if(playing){
 
-	socket.on('attack', function(attack){
-		console.log('Attack issued');
-		if(players[pCount % 2] == socket){
-			socket.broadcast.emit('attacked', attack);
-			console.log('Attack: ' + attack[0] + ' has been used by ' + socket.name);
-			pCount += 1;
-			nextTurn(socket);
-		}
-	})
+		socket.on('notSlowed', function(){
+			socket.broadcast.emit('notSlowed');
+		})
 
-	socket.on('missed', function(attack){
+		socket.on('attack', function(attack){
 
-		console.log('Attack issued');
-		if(players[pCount % 2] == socket){
-			socket.broadcast.emit('attackMissed', attack);
-			console.log('Attack: ' + attack[0] + ' missed the enemy.');
-			pCount += 1;
-			nextTurn(socket);
-		}
+			console.log('Attack issued');
+			if(players[pCount % 2] == socket){
+				socket.broadcast.emit('attacked', attack);
+				console.log('Attack: ' + attack[0] + ' has been used by ' + socket.name);
+				pCount += 1;
+				nextTurn(socket);
+			}
+		})
 
-	})
+		socket.on('missed', function(attack){
 
-	socket.on('disconnect', function(){
-		console.log('Disconnect');
-    	if(socket.playing){
-    		console.log('A player has left the game.');
-    		pCount -= 1;
-    	}
-  	});
+			console.log('Attack issued');
+			if(players[pCount % 2] == socket){
+				socket.broadcast.emit('attackMissed', attack);
+				console.log('Attack: ' + attack[0] + ' missed the enemy.');
+				pCount += 1;
+				nextTurn(socket);
+			}
 
-  	socket.on('updateHealth', function(health){
-  		socket.broadcast.emit('enemyHealthUpdate', health);
-  	})
+		})
 
-  	socket.on('dead', function(){
-  		playing = false;
-  		console.log(socket.name + ' has died');
-  		socket.broadcast.emit('enemyDead');
-  	})
+		socket.on('disconnect', function(){
+			console.log('Disconnect');
+	    	if(socket.playing){
+	    		console.log('A player has left the game.');
+	    		pCount -= 1;
 
-  	socket.on('slowed', function(){
-  		console.log(socket.name + ' has been slowed.');
-  		socket.broadcast.emit('enemySlowed');
-  	})
+	    	}
+	  	});
 
+	  	socket.on('updateHealth', function(health){
+	  		socket.broadcast.emit('enemyHealthUpdate', health);
+	  	})
+
+	  	socket.on('dead', function(){
+	  		playing = false;
+	  		console.log(socket.name + ' has died');
+	  		socket.broadcast.emit('enemyDead');
+	  		// restart(socket);
+	  	})
+
+	  	socket.on('slowed', function(){
+	  		console.log(socket.name + ' has been slowed.');
+	  		socket.broadcast.emit('enemySlowed');
+	  	})
+
+	  	socket.on('confused', function(){
+	  		console.log(socket.name + ' has become confused.');
+	  		socket.broadcast.emit('enemyConfused');
+	  	})
+
+	  	socket.on('notConfused', function(){
+	  		console.log(socket.name + ' is no longer confused.');
+	  		socket.broadcast.emit('enemyNotConfused');
+	  	})
+
+	  	socket.on('selfDamage', function(health){
+	  		console.log(socket.name + ' damaged themselves.');
+	  		socket.broadcast.emit('enemySelfDamage', health);
+	  	})
+
+  	}
 
 }
 
 function nextTurn(socket){
 	if(playing){
-		socket.broadcast.emit('turn');
+		//console.log(players[pCount%2].name + '\'s turn.')
 		console.log('Next turn');
+		socket.broadcast.emit('turn');
 	}
 }
+
+// function restart(socket){
+// 	players = [];
+// 	pCount = 0;
+// 	io.sockets.emit('start');
+// 	console.log('Starting');
+	// playing = true;
+
+// }

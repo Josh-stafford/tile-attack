@@ -59,6 +59,8 @@ body {
 	text-align: center;
 }
 
+#parentwrap { vertical-align:top; }
+
 #atk_buttons {
 	width: 75%;
 	height: 30%;
@@ -135,10 +137,12 @@ body {
 }
 
 .slow {
+	height: 10%;
 	margin-left: 35%;
 	margin-right: 35%;
 	margin-top: 5%;
 	font-family: Verdana;
+	font-size: 10px;
 	color: #8b8d8e;
 	border: 2px solid gray;
 }
@@ -155,7 +159,20 @@ body {
 
 }
 
+#confusePlayer {
+	-webkit-transition-duration: 1s; /* Safari */
+	background-color: #4b3ad1;	
+}
+
+
+#confuseEnemy {
+	-webkit-transition-duration: 1s; /* Safari */
+	background-color: #4b3aa5;
+
+}
+
 #textbox {
+	-webkit-transition-duration: 1s; /* Safari */
 	margin: 0 auto;
 	overflow: auto;
 	word-wrap: break-word;

@@ -6,6 +6,7 @@ class Player{
 		this.confused = false;
 		this.slowed = false;
 		this.speed = 100;
-		this.countdown = 3;
+		this.slowCountdown = 3;
+		this.confuseCountdown = 3;
 	}
 }
