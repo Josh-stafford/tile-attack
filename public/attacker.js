@@ -80,7 +80,7 @@ function attacker(atk){
 				console.log('Attack sent.')
 
 				updateMsg('You attacked with ' + playerAttack[0] + '.')
-				
+
 				if(player.slowCountdown > 0){
 					updateMsg('You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
 				}
@@ -113,7 +113,7 @@ function attacker(atk){
 				console.log('Attack sent.')
 
 				updateMsg('You attacked with ' + playerAttack[0] + '.')
-				
+
 				if(player.slowCountdown > 0){
 					updateMsg('You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
 				}
@@ -160,7 +160,7 @@ function attacker(atk){
 				console.log('Attack sent.')
 
 				updateMsg('You attacked with ' + playerAttack[0] + '.')
-				
+
 				if(player.confuseCountdown > 0){
 					updateMsg('You are still confused for ' + (player.confuseCountdown).toString() + ' turns.')
 				}

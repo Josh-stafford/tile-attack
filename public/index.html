@@ -1,9 +1,9 @@
 <html>
-	
+
 	<head>
 
 		<link rel="stylesheet" type="text/css" href="css.css">
-		
+
 		<title>Battle Simulator</title>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
@@ -20,7 +20,7 @@
 	</head>
 
 	<body>
-		
+
 		<div class='leftSide'>
 
 			<div id='Controls'>
@@ -37,7 +37,7 @@
 				<p id='Buffs' class='title'>Buffs, boosts, and items</p>
 
 				<div id='items'>
-					
+
 					<button id='buff1' onclick='applyBuff(0)' class='buff'></button>
 
 					<button id='buff2' onclick='applyBuff(1)' class='buff'></button>
@@ -55,7 +55,7 @@
 					<button id='buff8' class='buff'></button>
 
 				</div>
-				
+
 			</div>
 
 
@@ -69,7 +69,7 @@
 					<div id='textbox'>
 
 						<p id='messageBox'></p>
-				
+
 					</div>
 				</div>
 
@@ -82,6 +82,7 @@
 					<div id='healthBar1'>
 						<div id='bar1Fill' style='width: 100%'>
 						</div>
+						<p id='playerHealthNum'></p>
 					</div>
 
 					<div id='slowPlayer' class='slow'>
@@ -90,7 +91,7 @@
 					<div id='confusePlayer' class='slow'>
 						<p>Confused</p>
 					</div>
-					
+
 				</div>
 
 				<div id='enemy'>
@@ -105,7 +106,7 @@
 						<p>Confused</p>
 					</div>
 				</div>
-				
+
 			</div>
 
 		</div>

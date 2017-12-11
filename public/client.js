@@ -1,7 +1,7 @@
 var socket;
 var playing = false;
 var turn = false;
-socket = io.connect('http://172.20.14.29:6061');
+socket = io.connect('http://localhost:6061');
 socket.on('playing', setup);
 socket.on('attacked', attacked);
 socket.on('attackMissed', missed);
@@ -17,10 +17,11 @@ socket.on('useHBoost', function(){
 	player.hp += 40;
 	healthUpd(player.hp);
 	updateMsg('You regain 40hp.');
-	for(var i = 0; i < myBuffs; i++){
+	for(var i = 0; i < myBuffs.length; i++){
 		if(myBuffs[i][0] == 'Health Boost'){
+			console.log('Removing health boost');
 			myBuffs[i][2] -= 1;
-			updateMsg('You have ' + buffs[2] + ' health boosts remaining.');
+			updateMsg('You have ' + myBuffs[i][2] + ' health boosts remaining.');
 			break;
 		}
 	}
@@ -28,9 +29,11 @@ socket.on('useHBoost', function(){
 socket.on('useCrit', function(){
 	critBoosted = true;
 	updateMsg('Your next move is 4x more likely to be a critical hit!');
-	for(var i = 0; i < myBuffs; i++){
+	for(var i = 0; i < myBuffs.length; i++){
 		if(myBuffs[i][0] == 'Critical Boost'){
 			myBuffs[i][2] -= 1;
+			console.log('Removing Critical boost')
+			updateMsg('You have no more critical boosts.');
 			break;
 		}
 	}
@@ -73,6 +76,7 @@ var slowBox;
 var enemySlowBox;
 var critBoosted;
 var dmgBoosted;
+var playerHealthNum;
 
 
 var myAttacks = [];
@@ -96,6 +100,7 @@ function setup(){
 	enemySlowBox = document.getElementById('slowEnemy');
 	confuseBox = document.getElementById('confusePlayer');
 	enemyConfuseBox = document.getElementById('confuseEnemy');
+	playerHealthNum = document.getElementById('playerHealthNum');
 
 	for(var i = 0; i < 4; i++){
 		attack = attacks[Math.floor(Math.random()*attacks.length)];
@@ -139,12 +144,13 @@ function enemyHealthUpd(health){
 }
 
 function healthUpd(health){
-	playerHealth.style.width = (health/1.5).toString() + '%';	
+	playerHealth.style.width = (health/1.5).toString() + '%';
+	playerHealthNum.innerHTML = health + ' / 150';
 }
 
 function check(attack, num){
 	chance = r();
-	if(attack[num] && chance > 0.6){
+	if(attack[num] && chance < 0.7){
 		return true;
 	} else {
 		console.log(chance);
