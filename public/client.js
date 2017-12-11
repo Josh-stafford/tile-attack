@@ -1,7 +1,7 @@
 var socket;
 var playing = false;
 var turn = false;
-socket = io.connect('http://localhost:6061');
+socket = io.connect('http://172.20.14.29:6061');
 socket.on('playing', setup);
 socket.on('attacked', attacked);
 socket.on('attackMissed', missed);
@@ -9,9 +9,31 @@ socket.on('enemyHealthUpdate', enemyHealthUpd);
 socket.on('enemyDead', deadEnemy);
 socket.on('turn', yourTurn)
 socket.on('start', start);
+socket.on('healthBoostUsed', function(health){
+	updateMsg('Your enemy regains 40hp.');
+	enemyHealthUpd(health);
+})
+socket.on('useHBoost', function(){
+	player.hp += 40;
+	healthUpd(player.hp);
+	updateMsg('You regain 40hp.');
+	for(var i = 0; i < myBuffs; i++){
+		if(myBuffs[i][0] == 'Health Boost'){
+			myBuffs[i][2] -= 1;
+			updateMsg('You have ' + buffs[2] + ' health boosts remaining.');
+			break;
+		}
+	}
+})
 socket.on('useCrit', function(){
 	critBoosted = true;
 	updateMsg('Your next move is 4x more likely to be a critical hit!');
+	for(var i = 0; i < myBuffs; i++){
+		if(myBuffs[i][0] == 'Critical Boost'){
+			myBuffs[i][2] -= 1;
+			break;
+		}
+	}
 })
 socket.on('enemySelfDamage', selfDamage);
 socket.on('notSlowed', function(){
@@ -42,10 +64,6 @@ socket.on('critboost', function(){
 // 	updateMsg('Your starting move.')
 // })
 
-var atk1;
-var atk2;
-var atk3;
-var atk4;
 var playerHealth;
 var enemyHealth;
 var player;

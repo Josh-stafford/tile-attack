@@ -34,7 +34,6 @@ function newConnection(socket){
 
 	if(players.length < maxPlayers){
 		socket.playing = true;
-		pCount += 1;
 		players.push(socket);
 		console.log(socket.name + ' has joined the game');
 		socket.emit('playing');
@@ -52,7 +51,6 @@ function newConnection(socket){
 			if(players[pCount % 2] == socket){
 				socket.broadcast.emit('attacked', attack);
 				console.log('Attack: ' + attack[0] + ' has been used by ' + socket.name);
-				pCount += 1;
 				nextTurn(socket);
 			}
 		})
@@ -63,7 +61,6 @@ function newConnection(socket){
 			if(players[pCount % 2] == socket){
 				socket.broadcast.emit('attackMissed', attack);
 				console.log('Attack: ' + attack[0] + ' missed the enemy.');
-				pCount += 1;
 				nextTurn(socket);
 			}
 
@@ -73,7 +70,7 @@ function newConnection(socket){
 			console.log('Disconnect');
 	    	if(socket.playing){
 	    		console.log('A player has left the game.');
-	    		pCount -= 1;
+	    		players.splice(players.indexOf(socket));
 
 	    	}
 	  	});
@@ -107,7 +104,7 @@ function newConnection(socket){
 	  	socket.on('selfDamage', function(health){
 	  		console.log(socket.name + ' damaged themselves.');
 	  		socket.broadcast.emit('enemySelfDamage', health);
-	  		nextTurn();
+	  		nextTurn(socket);
 	  	})
 
 	  	socket.on('critboost', function(){
@@ -115,14 +112,17 @@ function newConnection(socket){
 	  			console.log(socket.name + ' has used a critical boost.');
 	  			socket.emit('useCrit');
 	  			socket.broadcast.emit('critboost');
-	  			pCount += 1;
 	  			nextTurn(socket);
 	  		}
 
 	  	})
 
 	  	socket.on('healthBoost', function(health){
-	  		console.log(socket.name + ' has used a health boost.');
+	  		if(players[pCount%2] == socket){
+	  			socket.emit('useHBoost');
+	  			socket.broadcast.emit('healthBoostUsed', health+40);
+	  			nextTurn(socket);
+	  		}
 	  	})
 
   	}
@@ -134,6 +134,7 @@ function nextTurn(socket){
 		//console.log(players[pCount%2].name + '\'s turn.')
 		console.log('Next turn');
 		socket.broadcast.emit('turn');
+		pCount += 1;
 	}
 }
 
