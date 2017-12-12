@@ -16,6 +16,31 @@ socket.on('enemyJoined', function(){
 })
 socket.on('endTurn', function(){
 	updateMsg('Your turn has ended.');
+	if(player.slowCountdown > 0){
+		player.slowCountdown -= 1;
+	}
+
+	if(player.confuseCountdown > 0){
+		player.confuseCountdown -= 1;
+	}
+
+	if(player.slowCountdown <= 0){
+		player.slowed = false;
+		slowBox.style.backgroundColor = '#333333';
+		slowBox.style.color = 'gray';
+		socket.emit('notSlowed');
+		player.slowCountdown = 4;
+		updateMsg('You are no longer slowed.');
+	}
+
+	if(player.confuseCountdown <= 0){
+		player.confused = false;
+		confuseBox.style.backgroundColor = '#444444';
+		confuseBox.style.color = 'gray';
+		socket.emit('notConfused');
+		player.confuseCountdown = 4;
+		updateMsg('You are no longer confused.');
+	}
 })
 socket.on('healthBoostUsed', function(health){
 	updateMsg('Your enemy regains 40hp.');
@@ -55,7 +80,7 @@ socket.on('useCrit', function(){
 })
 socket.on('enemySelfDamage', selfDamage);
 socket.on('notSlowed', function(){
-	enemySlowBox.style.backgroundColor = '#4b3aa5';
+	enemySlowBox.style.backgroundColor = '#444444';
 	enemySlowBox.style.color = 'gray';
 })
 
@@ -71,7 +96,7 @@ socket.on('enemyConfused', function(){
 
 socket.on('enemyNotConfused', function(){
 	enemyConfuseBox.style.color = 'gray';
-	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
+	enemyConfuseBox.style.backgroundColor = '#444444';
 })
 
 socket.on('critboost', function(){

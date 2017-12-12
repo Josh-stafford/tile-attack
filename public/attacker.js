@@ -179,24 +179,6 @@ function attacker(atk){
 			updateMsg('You attacked with ' + playerAttack[0] + ' dealing ' + playerAttack[1] + ' damage.');
 
 		}
-o
-		if(player.slowCountdown <= 0){
-			player.slowed = false;
-			slowBox.style.backgroundColor = '#4b3ad1';
-			slowBox.style.color = 'gray';
-			socket.emit('notSlowed');
-			player.slowCountdown = 3;
-			updateMsg('You are no longer slowed.');
-		}
-
-		if(player.confuseCountdown <= 0){
-			player.confused = false;
-			confuseBox.style.backgroundColor = '#4b3ad1';
-			confuseBox.style.color = 'gray';
-			socket.emit('notConfused');
-			player.confuseCountdown = 3;
-			updateMsg('You are no longer confused.');
-		}
 
 	}
 
