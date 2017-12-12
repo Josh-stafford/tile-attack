@@ -11,6 +11,12 @@ socket.on('enemyHealthUpdate', enemyHealthUpd);
 socket.on('enemyDead', deadEnemy);
 socket.on('turn', yourTurn)
 socket.on('start', start);
+socket.on('enemyJoined', function(){
+	updateMsg('An enemy has entered the arena.');
+})
+socket.on('endTurn', function(){
+	updateMsg('Your turn has ended.');
+})
 socket.on('healthBoostUsed', function(health){
 	updateMsg('Your enemy regains 40hp.');
 	enemyHealthUpd(health);
@@ -18,7 +24,7 @@ socket.on('healthBoostUsed', function(health){
 socket.on('useHBoost', function(){
 	player.hp += 40;
 	healthUpd(player.hp);
-	updateMsg('You regain 40hp.');
+	updateMsg('You gain 40hp.');
 	for(var i = 0; i < myBuffs.length; i++){
 		if(myBuffs[i][0] == 'Health Boost'){
 			console.log('Removing health boost');
@@ -27,6 +33,13 @@ socket.on('useHBoost', function(){
 			break;
 		}
 	}
+})
+
+socket.on('useDBoost', function(){
+
+	dmgBoosted = true;
+	updateMsg('Your next attack will do 20% more damage.');
+
 })
 socket.on('useCrit', function(){
 	critBoosted = true;

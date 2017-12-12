@@ -6,8 +6,7 @@ function applyBuff(num){
 		} else if (buff[0] == 'Health Boost'){
 			socket.emit('healthBoost', player.hp);
 		} else if (buff[0] == 'Damage Boost'){
-			dmgBoosted = buff[1];
-			updateMsg('Your damage is 20% more on your next go.');
+			socket.emit('damageBoost');
 
 			//Send buffs to enemy
 		}
