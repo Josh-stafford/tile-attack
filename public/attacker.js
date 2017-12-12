@@ -11,7 +11,7 @@ function attacker(atk){
 
 	critChance = r();
 
-	critMaths = 0.1 / (100 /playerAttack[5])
+	critMaths = 0.1 / (100 /playerAttack[5]);
 
 	if(critBoosted){
 		critMaths *= 4;
@@ -29,7 +29,7 @@ function attacker(atk){
 
 		console.log('Attack sent.')
 
-		updateMsg('You attacked with ' + playerAttack[0] + '.')
+		updateMsg('You attacked with ' + critPlayerAttack[0] + ' dealing ' + critPlayerAttack[1] + ' damage.');
 		updateMsg('It\'s a critical hit!')
 
 	} else {
@@ -51,6 +51,7 @@ function attacker(atk){
 				} else {
 					updateMsg('You missed.');
 				}
+
 			} else if(chance >= 0.9){
 
 				console.log('Damaged self.');
@@ -69,7 +70,9 @@ function attacker(atk){
 
 				newPlayerAtk = playerAttack;
 
-				newPlayerAtk[1] = newPlayerAtk[1] * atkDmg;
+				newPlayerAtk[1] = Math.ceil(newPlayerAtk[1] * atkDmg);
+
+				updateMsg('You attacked with ' + newPlayerAttack[0] + ' dealing ' + newPlayerAttack[1] + ' damage.');
 
 				socket.emit('attack', newPlayerAtk);
 
@@ -79,7 +82,7 @@ function attacker(atk){
 
 				console.log('Attack sent.')
 
-				updateMsg('You attacked with ' + playerAttack[0] + '.')
+				updateMsg('You attacked with ' + playerAttack[0] + ' dealing ' + playerAttack[1] + ' damage.');
 
 				if(player.slowCountdown > 0){
 					updateMsg('You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
@@ -112,7 +115,7 @@ function attacker(atk){
 
 				console.log('Attack sent.')
 
-				updateMsg('You attacked with ' + playerAttack[0] + '.')
+				updateMsg('You attacked with ' + playerAttack[0] + ' dealing ' + playerAttack[1] + ' damage.');
 
 				if(player.slowCountdown > 0){
 					updateMsg('You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
@@ -159,7 +162,7 @@ function attacker(atk){
 
 				console.log('Attack sent.')
 
-				updateMsg('You attacked with ' + playerAttack[0] + '.')
+				updateMsg('You attacked with ' + playerAttack[0] + ' dealing ' + playerAttack[1] + ' damage.');
 
 				if(player.confuseCountdown > 0){
 					updateMsg('You are still confused for ' + (player.confuseCountdown).toString() + ' turns.')
@@ -173,10 +176,10 @@ function attacker(atk){
 
 			console.log('Attack sent.')
 
-			updateMsg('You attacked with ' + playerAttack[0] + '.')
+			updateMsg('You attacked with ' + playerAttack[0] + ' dealing ' + playerAttack[1] + ' damage.');
 
 		}
-
+o
 		if(player.slowCountdown <= 0){
 			player.slowed = false;
 			slowBox.style.backgroundColor = '#4b3ad1';

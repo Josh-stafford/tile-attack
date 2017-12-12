@@ -1,7 +1,6 @@
 function attacked(attack){
 	console.log('Attacked');
-	updateMsg('Your enemy attacks you with ' + attack[0]);
-	updateMsg('You take ' + (attack[1].toString()) + ' damage.');
+	updateMsg('Your enemy attacks you with ' + attack[0] + ' dealing ' + (attack[1].toString()) + ' damage.');
 
 	if(check(attack, 2) && check(attack, 3)){
 

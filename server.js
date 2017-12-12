@@ -102,9 +102,11 @@ function newConnection(socket){
 	  	})
 
 	  	socket.on('selfDamage', function(health){
-	  		console.log(socket.name + ' damaged themselves.');
-	  		socket.broadcast.emit('enemySelfDamage', health);
-	  		nextTurn(socket);
+				if(players[pCount%2] == socket){
+		  		console.log(socket.name + ' damaged themselves.');
+		  		socket.broadcast.emit('enemySelfDamage', health);
+		  		nextTurn(socket);
+				}
 	  	})
 
 	  	socket.on('critboost', function(){
