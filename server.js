@@ -27,6 +27,7 @@ function newConnection(socket){
 		socket.name = 'Player 1';
 	} else {
 		socket.name = 'Player 2';
+		socket.broadcast.emit('enemyJoined');
 	}
 
 	// console.log('New connection');
@@ -133,6 +134,14 @@ function newConnection(socket){
 					socket.broadcast.emit('usedWiseUp';)
 				}
 			})
+
+			socket.on('damageBoost', function(){
+				if(turn()){
+					socket.emit('useDBoost');
+					socket.broadcast.emit('damageBoostUsed');
+					console.log(socket.name + ' has used a damage boost.');
+					nextTurn(socket);
+				}
 
   	}
 

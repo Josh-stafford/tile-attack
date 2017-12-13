@@ -47,7 +47,7 @@ function attacker(atk){
 				socket.emit('missed', playerAttack);
 
 				if(player.slowCountdown > 0){
-					updateMsg('You missed. You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
+					updateMsg('You missed with ' + playerAttack[0] + '. You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
 				} else {
 					updateMsg('You missed.');
 				}
@@ -104,7 +104,7 @@ function attacker(atk){
 				socket.emit('missed', playerAttack);
 
 				if(player.slowCountdown > 0){
-					updateMsg('You missed. You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
+					updateMsg('You missed with ' + playerAttack[0] + '. You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
 				} else {
 					updateMsg('You missed.');
 				}

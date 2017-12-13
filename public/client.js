@@ -27,6 +27,7 @@ socket.on('usedWiseUp', function(){
 
 socket.on('endTurn', function(){
 	updateMsg('Your turn has ended.');
+}
 
 	if(player.slowCountdown > 0){
 		player.slowCountdown -= 1;
@@ -38,7 +39,7 @@ socket.on('endTurn', function(){
 
 	if(player.slowCountdown <= 0){
 		player.slowed = false;
-		slowBox.style.backgroundColor = '#4b3ad1';
+		slowBox.style.backgroundColor = '#444444';
 		slowBox.style.color = 'gray';
 		socket.emit('notSlowed');
 		updateMsg('You are no longer slowed.');
@@ -46,13 +47,13 @@ socket.on('endTurn', function(){
 
 	if(player.confuseCountdown <= 0){
 		player.confused = false;
-		confuseBox.style.backgroundColor = '#4b3ad1';
+		confuseBox.style.backgroundColor = '#444444';
 		confuseBox.style.color = 'gray';
 		socket.emit('notConfused');
+		player.confuseCountdown = 4;
 		updateMsg('You are no longer confused.');
 	}
 })
-
 socket.on('healthBoostUsed', function(health){
 	updateMsg('Your enemy regains 40hp.');
 	enemyHealthUpd(health);
@@ -60,7 +61,7 @@ socket.on('healthBoostUsed', function(health){
 socket.on('useHBoost', function(){
 	player.hp += 40;
 	healthUpd(player.hp);
-	updateMsg('You regain 40hp.');
+	updateMsg('You gain 40hp.');
 	for(var i = 0; i < myBuffs.length; i++){
 		if(myBuffs[i][0] == 'Health Boost'){
 			console.log('Removing health boost');
@@ -69,6 +70,17 @@ socket.on('useHBoost', function(){
 			break;
 		}
 	}
+})
+
+socket.on('damageBoostUsed', function(){
+	updateMsg('Your enemy has used a damage boost.');
+})
+
+socket.on('useDBoost', function(){
+
+	dmgBoosted = true;
+	updateMsg('Your next attack will do 20% more damage.');
+
 })
 socket.on('useCrit', function(){
 	critBoosted = true;
@@ -84,7 +96,7 @@ socket.on('useCrit', function(){
 })
 socket.on('enemySelfDamage', selfDamage);
 socket.on('notSlowed', function(){
-	enemySlowBox.style.backgroundColor = '#4b3aa5';
+	enemySlowBox.style.backgroundColor = '#444444';
 	enemySlowBox.style.color = 'gray';
 	updateMsg('Your enemy is no longer slowed.');
 })
@@ -103,7 +115,7 @@ socket.on('enemyConfused', function(){
 
 socket.on('enemyNotConfused', function(){
 	enemyConfuseBox.style.color = 'gray';
-	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
+	enemyConfuseBox.style.backgroundColor = '#444444';
 	updateMsg('Your enemy is no longer confused.');
 })
 

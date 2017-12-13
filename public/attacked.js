@@ -21,6 +21,9 @@ function attacked(attack){
 		socket.emit('slowed');
 		socket.emit('confused');
 
+		player.slowCountdown = 4;
+		player.confuseCountdown = 4;
+
 	} else if(check(attack, 2)){
 
 		player.slowed = true;
@@ -32,6 +35,8 @@ function attacked(attack){
 
 		socket.emit('slowed');
 
+		player.slowCountdown = 4;
+
 	} else if(check(attack, 3)){
 
 		player.confused = true;
@@ -42,6 +47,8 @@ function attacked(attack){
 		updateMsg('You have become confused for ' + (player.confuseCountdown).toString() + ' turns.');
 
 		socket.emit('confused');
+
+		player.confuseCountdown = 4;
 
 	}
 
