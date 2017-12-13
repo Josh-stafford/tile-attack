@@ -21,13 +21,12 @@ socket.on('useWiseUp', function(){
 
 socket.on('usedWiseUp', function(){
 	enemyConfuseBox.style.color = 'gray';
-	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
-	updateMsg('Your enemy uses \'Wise Up\' and is no longer confused.');
+	enemyConfuseBox.style.backgroundColor = '#444444';
+	updateMsg('Your enemy uses \'Wise Up\'.');
 })
 
 socket.on('endTurn', function(){
 	updateMsg('Your turn has ended.');
-}
 
 	if(player.slowCountdown > 0){
 		player.slowCountdown -= 1;
@@ -104,13 +103,11 @@ socket.on('notSlowed', function(){
 socket.on('enemySlowed', function(){
 	enemySlowBox.style.backgroundColor = 'red';
 	enemySlowBox.style.color = 'white';
-	updateMsg('Your enemy becomes slowed.');
 })
 
 socket.on('enemyConfused', function(){
 	enemyConfuseBox.style.color = 'white';
 	enemyConfuseBox.style.backgroundColor = 'red';
-	updateMsg('Your enemy becomes confused.');
 })
 
 socket.on('enemyNotConfused', function(){

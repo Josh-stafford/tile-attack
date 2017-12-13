@@ -129,25 +129,27 @@ function newConnection(socket){
 	  	})
 
 			socket.on('wiseUp', function(){
-				if(turn()){
+				if(turn(socket)){
+					console.log(socket.name + ' has used Wise Up');
 					socket.emit('useWiseUp');
-					socket.broadcast.emit('usedWiseUp';)
+					socket.broadcast.emit('usedWiseUp');
 				}
 			})
 
 			socket.on('damageBoost', function(){
-				if(turn()){
+				if(turn(socket)){
 					socket.emit('useDBoost');
 					socket.broadcast.emit('damageBoostUsed');
 					console.log(socket.name + ' has used a damage boost.');
 					nextTurn(socket);
 				}
+			})
 
   	}
 
 }
 
-function turn(){
+function turn(socket){
 	return players[pCount%2] == socket;
 }
 

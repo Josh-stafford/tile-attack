@@ -5,7 +5,7 @@ function attacker(atk){
 	playerAttack = player.attacks[atk];
 
 	if(dmgBoosted){
-		playerAttack[1] *= dmgBoosted;
+		playerAttack[1] *= 1.2;
 		dmgBoosted = false;
 	}
 

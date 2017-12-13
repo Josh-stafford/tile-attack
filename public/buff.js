@@ -10,6 +10,7 @@ function applyBuff(num){
 
 			//Send buffs to enemy
 		} else if (buff[0] == 'Wise up'){
+			console.log('Wise up');
 			socket.emit('wiseUp');
 		}
 	} else {
