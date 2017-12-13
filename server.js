@@ -127,8 +127,19 @@ function newConnection(socket){
 	  		}
 	  	})
 
+			socket.on('wiseUp', function(){
+				if(turn()){
+					socket.emit('useWiseUp');
+					socket.broadcast.emit('usedWiseUp';)
+				}
+			})
+
   	}
 
+}
+
+function turn(){
+	return players[pCount%2] == socket;
 }
 
 function nextTurn(socket){
@@ -136,6 +147,7 @@ function nextTurn(socket){
 		//console.log(players[pCount%2].name + '\'s turn.')
 		console.log('Next turn');
 		socket.broadcast.emit('turn');
+		socket.emit('endTurn');
 		pCount += 1;
 	}
 }

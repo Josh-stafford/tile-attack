@@ -11,6 +11,48 @@ socket.on('enemyHealthUpdate', enemyHealthUpd);
 socket.on('enemyDead', deadEnemy);
 socket.on('turn', yourTurn)
 socket.on('start', start);
+socket.on('useWiseUp', function(){
+	player.confused = false;
+	confuseBox.style.backgroundColor = '#4b3ad1';
+	confuseBox.style.color = 'gray';
+	socket.emit('notConfused');
+	updateMsg('You use \'Wise up\' and are no longer confused.');
+})
+
+socket.on('usedWiseUp', function(){
+	enemyConfuseBox.style.color = 'gray';
+	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
+	updateMsg('Your enemy uses \'Wise Up\' and is no longer confused.');
+})
+
+socket.on('endTurn', function(){
+	updateMsg('Your turn has ended.');
+
+	if(player.slowCountdown > 0){
+		player.slowCountdown -= 1;
+	}
+
+	if(player.confuseCountdown > 0){
+		player.confuseCountdown -= 1;
+	}
+
+	if(player.slowCountdown <= 0){
+		player.slowed = false;
+		slowBox.style.backgroundColor = '#4b3ad1';
+		slowBox.style.color = 'gray';
+		socket.emit('notSlowed');
+		updateMsg('You are no longer slowed.');
+	}
+
+	if(player.confuseCountdown <= 0){
+		player.confused = false;
+		confuseBox.style.backgroundColor = '#4b3ad1';
+		confuseBox.style.color = 'gray';
+		socket.emit('notConfused');
+		updateMsg('You are no longer confused.');
+	}
+})
+
 socket.on('healthBoostUsed', function(health){
 	updateMsg('Your enemy regains 40hp.');
 	enemyHealthUpd(health);
@@ -44,21 +86,25 @@ socket.on('enemySelfDamage', selfDamage);
 socket.on('notSlowed', function(){
 	enemySlowBox.style.backgroundColor = '#4b3aa5';
 	enemySlowBox.style.color = 'gray';
+	updateMsg('Your enemy is no longer slowed.');
 })
 
 socket.on('enemySlowed', function(){
 	enemySlowBox.style.backgroundColor = 'red';
 	enemySlowBox.style.color = 'white';
+	updateMsg('Your enemy becomes slowed.');
 })
 
 socket.on('enemyConfused', function(){
 	enemyConfuseBox.style.color = 'white';
 	enemyConfuseBox.style.backgroundColor = 'red';
+	updateMsg('Your enemy becomes confused.');
 })
 
 socket.on('enemyNotConfused', function(){
 	enemyConfuseBox.style.color = 'gray';
 	enemyConfuseBox.style.backgroundColor = '#4b3aa5';
+	updateMsg('Your enemy is no longer confused.');
 })
 
 socket.on('critboost', function(){

@@ -10,6 +10,8 @@ function applyBuff(num){
 			updateMsg('Your damage is 20% more on your next go.');
 
 			//Send buffs to enemy
+		} else if (buff[0] == 'Wise up'){
+			socket.emit('wiseUp');
 		}
 	} else {
 		updateMsg('You have no more ' + buff[0] + ' buffs.');
