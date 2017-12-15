@@ -4,11 +4,6 @@ function attacker(atk){
 
 	playerAttack = player.attacks[atk];
 
-	if(dmgBoosted){
-		playerAttack[1] *= 1.2;
-		dmgBoosted = false;
-	}
-
 	critChance = r();
 
 	critMaths = 0.1 / (100 /playerAttack[5]);
@@ -20,7 +15,24 @@ function attacker(atk){
 
 	console.log(critMaths);
 
-	if(critChance <= critMaths){
+	if(dmgBoosted){
+		console.log('Boosted');
+		boostedPlayerAttack = playerAttack;
+		boostedPlayerAttack[1] *= 1.5;
+		dmgBoosted = false;
+		socket.emit('attack', boostedPlayerAttack);
+
+		console.log('Attack sent.')
+
+		updateMsg('You attacked with ' + boostedPlayerAttack[0] + ' dealing ' + boostedPlayerAttack[1] + ' damage.');
+
+		if(player.slowCountdown > 0){
+			updateMsg('You are still slowed for ' + (player.slowCountdown).toString() + ' turns.')
+		}
+
+		boostedPlayerAttack = [];
+
+	} else if(critChance <= critMaths){
 
 		critPlayerAttack = playerAttack;
 		critPlayerAttack[1] = critPlayerAttack[1] * 2;

@@ -3,7 +3,7 @@ var playing = false;
 var turn = false;
 var messages=0;
 var letter;
-socket = io.connect('http://localhost:6061');
+socket = io.connect('http://172.20.12.108:6061');
 socket.on('playing', setup);
 socket.on('attacked', attacked);
 socket.on('attackMissed', missed);
@@ -36,17 +36,17 @@ socket.on('endTurn', function(){
 		player.confuseCountdown -= 1;
 	}
 
-	if(player.slowCountdown <= 0){
+	if(player.slowCountdown <= 0 && player.slowed){
 		player.slowed = false;
-		slowBox.style.backgroundColor = '#444444';
+		slowBox.style.backgroundColor = '#333333';
 		slowBox.style.color = 'gray';
 		socket.emit('notSlowed');
 		updateMsg('You are no longer slowed.');
 	}
 
-	if(player.confuseCountdown <= 0){
+	if(player.confuseCountdown <= 0 && player.confused){
 		player.confused = false;
-		confuseBox.style.backgroundColor = '#444444';
+		confuseBox.style.backgroundColor = '#333333';
 		confuseBox.style.color = 'gray';
 		socket.emit('notConfused');
 		player.confuseCountdown = 4;
@@ -78,7 +78,16 @@ socket.on('damageBoostUsed', function(){
 socket.on('useDBoost', function(){
 
 	dmgBoosted = true;
-	updateMsg('Your next attack will do 20% more damage.');
+	updateMsg('Your next attack will do 50% more damage.');
+
+	for(var i = 0; i < myBuffs.length; i++){
+		if(myBuffs[i][0] == 'Damage Boost'){
+			console.log('Removing damage boost');
+			myBuffs[i][2] -= 1;
+			updateMsg('You have ' + myBuffs[i][2] + ' damage boosts remaining.');
+			break;
+		}
+	}
 
 })
 socket.on('useCrit', function(){
